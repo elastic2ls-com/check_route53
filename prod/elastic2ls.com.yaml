@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  zoneelastic2lscom:
+    Type: 'AWS::Route53::HostedZone'
+    Properties:
+      Name: elastic2ls.com.
+  dnsforwardelastic2lscom:
+    Type: 'AWS::Route53::RecordSetGroup'
+    Properties:
+      HostedZoneId: !Ref zoneelastic2lscom
+      RecordSets:
+        - Name: elastic2ls.com
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z21DNDUVLTQW6Q
+            DNSName:  s3-website.eu-central-1.amazonaws.com
+  dns052elastic2lscom:
+    Type: 'AWS::Route53::RecordSetGroup'
+    Properties:
+      HostedZoneId: !Ref zoneelastic2lscom
+      RecordSets:
+        - Name: \052.elastic2ls.com.
+          Type: CNAME
+          TTL: '3600'
+          ResourceRecords:
+            - www.elastic2ls.com
+  dnswwwelastic2lscom:
+    Type: 'AWS::Route53::RecordSetGroup'
+    Properties:
+      HostedZoneId: !Ref zoneelastic2lscom
+      RecordSets:
+        - Name: www.elastic2ls.com.
+          Type: CNAME
+          TTL: '3600'
+          ResourceRecords:
+            - elastic2ls.example.site.md
+  dns052wwwelastic2lscom:
+    Type: 'AWS::Route53::RecordSetGroup'
+    Properties:
+      HostedZoneId: !Ref zoneelastic2lscom
+      RecordSets:
+        - Name: \052.www.elastic2ls.com.
+          Type: CNAME
+          TTL: '3600'
+          ResourceRecords:
+            - elastic2ls.hoopchina.com.com.
+  s3forward:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          RedirectAllRequestsTo:
+            HostName: www.elastic2ls.com
+
+
+Description: ''

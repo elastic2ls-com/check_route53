@@ -1,0 +1,5 @@
+cfn_flip
+dnspython
+boto3
+ipaddress
+tldextract
